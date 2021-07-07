@@ -11,6 +11,14 @@ class Repository:
         Db.closeSession(session)
         
     @staticmethod
+    def createAll(consumables):
+        session = Db.startSession()
+        for consumable in consumables:
+            session.add(consumable)
+        session.commit()
+        Db.closeSession(session)
+
+    @staticmethod
     def readAllUndeleted(art_type):
         session = Db.startSession()
         results = session.query(Consumable.id, Consumable.art_type, Consumable.name, \
@@ -30,7 +38,10 @@ class Repository:
     @staticmethod
     def deleteById(id):
         session = Db.startSession()
-        session.query(Consumable).filter(Consumable.id == id).delete()
+        # session.query(Consumable).filter(Consumable.id == id).delete()
+        session.query(Consumable).filter(Consumable.id==id).\
+            update({'deleted':True}
+            ,synchronize_session=False)
         session.commit()
         Db.closeSession(session)
 
