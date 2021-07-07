@@ -1,0 +1,16 @@
+Following technologies are required to run the program: Python v3.7+, MySql/PostgreSQL 
+
+Please kindly do the following to setup the program:
+.. pull project from github
+. cd project_directory
+. python -m venv env 
+. source env/Scripts/activate
+. pip install -r requirements.txt
+.. In local mySql/postgreSql server, create a database named 'dsi_task_1'
+.. update the db_connection_string in connection.py 
+.. run models.py to create the desired tables in 'dsi_task_1' database
+.. Finally, run app.py ! 
+
+# ToDo
+- Single session declaration
+db class
