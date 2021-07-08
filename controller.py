@@ -13,7 +13,7 @@ class Controller:
     def create(art_type):
         print('Adding a new '+art_type+'...')
         
-        consumable = Controller.inputConsumAttrs(art_type)
+        consumable = Controller.inputConsumCreateAttrs(art_type)
         Repository.create(consumable=consumable)
         
         print(art_type+' added succesfully')
@@ -91,6 +91,17 @@ class Controller:
     def edit(consumable):
         print('<<< Editing '+consumable.art_type+': '+consumable.name+ ' >>>')
 
+        consumableUpdt = Controller.inputConsumEditAttrs(consumable)
+        Repository.update(consumableUpdt)
+        print('Updated '+consumable.art_type+" '"+consumable.name+"' successfully")
+
+
+    @staticmethod
+    ### Below method (when invoked) takes from User, the valid 'update'.. 
+    ### ..attribute values (e.g. Time, Days, Rating, End Date) of a Consumable..
+    ### ..and returns an updated Consumable object/record
+    def inputConsumEditAttrs(consumable):
+        # Taking Consumable 'consum_time_hrs' input and checking validity
         validTime = False
         while not validTime:
             time = input('i. Add more consumption time (in hours): ')
@@ -109,6 +120,7 @@ class Controller:
                 else:
                     print('Please enter a valid amount of hours')        
 
+        # Taking Consumable 'consum_days' input and checking validity
         validNumOfDays = False
         while not validNumOfDays:
             numOfDays = input('ii. Add more consumption days: ')
@@ -122,6 +134,7 @@ class Controller:
                 else:
                     print('Please enter a valid number of days')
 
+        # Taking Consumable 'rating' input and checking validity
         validRating = False
         while not validRating:
             rating = input('iii. Update rating: ')
@@ -137,6 +150,7 @@ class Controller:
                 else:
                     print('Please enter a valid amount of rating (e.g. 9, 9.5, 9.75)')
 
+        # Taking Consumable 'end_date' input and checking validity
         validEndDate = False
         while not validEndDate:
             end_date = input('iv. Consumption Ending date (YYYY-MM-DD): ')
@@ -156,16 +170,16 @@ class Controller:
             consumable.rating = rating
         if end_date:
             consumable.end_date = end_date
-
-        Repository.update(consumable)
-        print('Updated '+consumable.art_type+" '"+consumable.name+"' successfully")
+        
+        return consumable
 
 
     @staticmethod
     ### Below method (when invoked) takes from User, all the valid.. 
     ### ..attribute values (e.g. Name, Start Day, Rating..) of a Consumable..
     ### ..and returns a Consumable object/record
-    def inputConsumAttrs(art_type):
+    def inputConsumCreateAttrs(art_type):
+        # Taking Consumable 'name' input and checking validity
         validName = False
         while not validName:
             name = input('i. Name: ').strip()
@@ -174,6 +188,7 @@ class Controller:
             else:
                 print(art_type+' name cannot be empty')
 
+        # Taking Consumable 'start_date' input and checking validity
         validStartDate = False
         while not validStartDate:
             start_date = input('ii. Consumption Starting date (YYYY-MM-DD): ')
@@ -187,6 +202,7 @@ class Controller:
                     print("Incorrect data format, should be YYYY-MM-DD")
                     # raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
+        # Taking Consumable 'end_date' input and checking validity
         validEndDate = False
         while not validEndDate:
             end_date = input('iii. Consumption Ending date (YYYY-MM-DD): ')
@@ -199,6 +215,7 @@ class Controller:
                 except ValueError:
                     print("Incorrect data format, should be YYYY-MM-DD")
 
+        # Taking Consumable 'consum_time_hrs' input and checking validity
         validTime = False
         while not validTime:
             time = input('iv. Total consumption time (in hours): ')
@@ -217,6 +234,7 @@ class Controller:
                 else:
                     print('Please enter a valid amount of hours')
 
+        # Taking Consumable 'rating' input and checking validity
         validRating = False
         while not validRating:
             rating = input('v. Rate the '+art_type+' (out of 10): ')
@@ -232,6 +250,7 @@ class Controller:
                 else:
                     print('Please enter a valid amount of rating (e.g. 9, 9.5, 9.75)')
 
+        # Taking Consumable 'consum_days' input and checking validity
         validNumOfDays = False
         while not validNumOfDays:
             numOfDays = input('vi. Total days of consumption: ')
@@ -257,6 +276,7 @@ class Controller:
         if rating:
             consumable.rating = rating
         consumable.consum_days = numOfDays
+        
         return consumable
 
 
