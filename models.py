@@ -9,18 +9,6 @@ from connection import engine
 
 Base = declarative_base()
 
-### Art model
-# class Art(Base):
-    # __tablename__ = 'arts'
-    # id = Column(Integer, Sequence('art_id_seq'), primary_key=True)
-    # type = Column(String(20), nullable=False, unique=True)
-    # created_at = Column(DateTime(timezone=True), default=func.now())
-    # updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
-
-    # def __repr__(self):
-    #     return "<Art(id='%d', type='%s', created_at='%s', updated_at='%s')>" % ( 
-    #         self.id, self.type, self.created_at, self.updated_at)
-
 #### !! A 'Consumable' refers to an art_item..
 #### ..e.g. 'Book', 'Movie' each of them is a 'Consumable'
 

@@ -9,6 +9,7 @@ art_types = {'book':'Book', 'series':'Series', 'movie':'Movie'}
 class Controller:
    
     @staticmethod
+    ### --- Take a (new) Consumable input from user and save record in db
     def create(art_type):
         print('Adding a new '+art_type+'...')
         
@@ -18,6 +19,7 @@ class Controller:
         print(art_type+' added succesfully')
 
     @staticmethod
+    ### --- Get all Consumable (for a type) and shows them in a table 
     def readAll(art_type):
         print('Fetching all '+art_type+'(s)...')
 
@@ -44,6 +46,7 @@ class Controller:
         return consum_coll
 
     @staticmethod
+    ### --- Get a specific Consumable and show its details in a table
     def readDetails(art_type, id, printDetails=True):
         if printDetails:
             print('Fetching the desired '+art_type+'...')
@@ -71,6 +74,7 @@ class Controller:
         return consum_tuple
 
     @staticmethod
+    ### --- Delete a Consumable i.e. update-> consumable.delete = True
     def delete(art_type, id):
         print('Deleting a '+art_type+'...')
         
@@ -79,6 +83,7 @@ class Controller:
         print('Selected '+art_type+' deleted succesfully')
  
     @staticmethod
+    ### --- Edit a Consumable and update it into db
     def edit(consumable):
         print('<<< Editing '+consumable.art_type+': '+consumable.name+ ' >>>')
 

@@ -1,9 +1,6 @@
 from controller import Controller
 import re
 
-#### !! A 'Consumable' refers to an art_item..
-#### ..e.g. a 'Book', a 'Movie' - each of them is a 'Consumable'
-
 # -- Greeting the user
 print('\n- - - '+' WELCOME TO ART CONSUMPTION MANAGEMENT SYSTEM ' \
                 + ' - - -\n')
