@@ -18,6 +18,7 @@ class Controller:
         
         print(art_type+' added succesfully')
 
+
     @staticmethod
     ### --- Get all Consumable (for a type) and shows them in a table 
     def readAll(art_type):
@@ -44,6 +45,7 @@ class Controller:
                         'Total Consumption Hours', 'Rating'], 
                     tablefmt='pretty') )
         return consum_coll
+
 
     @staticmethod
     ### --- Get a specific Consumable and show its details in a table
@@ -73,6 +75,7 @@ class Controller:
         
         return consum_tuple
 
+
     @staticmethod
     ### --- Delete a Consumable i.e. update-> consumable.delete = True
     def delete(art_type, id):
@@ -81,7 +84,8 @@ class Controller:
         Repository.deleteById(id=id)
         
         print('Selected '+art_type+' deleted succesfully')
- 
+
+
     @staticmethod
     ### --- Edit a Consumable and update it into db
     def edit(consumable):
@@ -155,6 +159,7 @@ class Controller:
 
         Repository.update(consumable)
         print('Updated '+consumable.art_type+" '"+consumable.name+"' successfully")
+
 
     @staticmethod
     ### Below method (when invoked) takes from User, all the valid.. 
@@ -254,6 +259,7 @@ class Controller:
         consumable.consum_days = numOfDays
         return consumable
 
+
     @staticmethod
     ### Below method displays to an user 'a list of options' to choose from.. 
     ### ..and returns user's selected option
@@ -283,6 +289,7 @@ class Controller:
             else:
                 print('Please select a valid ' + option_type + ' number')
         return selected
+
 
     @staticmethod
     def getStarPadding():
