@@ -49,7 +49,7 @@ class Controller:
 
     @staticmethod
     ### --- Get a specific Consumable and show its details in a table
-    def readDetails(art_type, id, printDetails=True):
+    def readDetailsById(art_type, id, printDetails=True):
         if printDetails:
             print('Fetching the desired '+art_type+'...')
 
@@ -95,6 +95,116 @@ class Controller:
         Repository.update(consumableUpdt)
         print('Updated '+consumable.art_type+" '"+consumable.name+"' successfully")
 
+
+    @staticmethod
+    ### --- Edit a Consumable and update it into db
+    def readOverall():
+        print('Fetching overall info...')
+
+        consumables = Repository.readAll()
+        return consumables
+
+
+    ### --- Generates overall report
+    @staticmethod
+    def generateReport(consumables):
+        # --------- Calculating values for across each type
+        consum_time_hrs_by_type = {}
+        consum_days_by_type = {}
+        consum_rating_by_type = {}
+        count_rated_consumable_by_type = {}
+        consumable_count_by_type = {}
+
+        for consumable in consumables:
+            # -- Generating dict for each type's consum_timer_hrs
+            if consumable.art_type in consum_time_hrs_by_type:
+                consum_time_hrs_by_type[consumable.art_type] = \
+                    consum_time_hrs_by_type[consumable.art_type] + consumable.consum_time_hrs
+            else:
+                consum_time_hrs_by_type[consumable.art_type] = consumable.consum_time_hrs
+
+            # -- Generating dict for each type's consum_days
+            if consumable.art_type in consum_days_by_type:
+                consum_days_by_type[consumable.art_type] = \
+                    consum_days_by_type[consumable.art_type] + consumable.consum_days
+            else:
+                consum_days_by_type[consumable.art_type] = consumable.consum_days
+
+            # -- Generating dict for each type of cosumable's ratings
+            if consumable.rating:
+                if consumable.art_type in consum_rating_by_type:
+                    consum_rating_by_type[consumable.art_type] = \
+                        consum_rating_by_type[consumable.art_type] + consumable.rating
+                else:
+                    consum_rating_by_type[consumable.art_type] = consumable.rating
+                # -- Generating dict for counting each type of rated consumables
+                if consumable.art_type in count_rated_consumable_by_type:
+                    count_rated_consumable_by_type[consumable.art_type] = \
+                        count_rated_consumable_by_type[consumable.art_type] + 1
+                else:
+                    count_rated_consumable_by_type[consumable.art_type] = 1
+
+            # -- Generating dict for each type of consumable count
+            if consumable.art_type in consumable_count_by_type:
+                consumable_count_by_type[consumable.art_type] = consumable_count_by_type[consumable.art_type]+1
+            else:
+                consumable_count_by_type[consumable.art_type] = 1
+
+        # print(consum_time_hrs_by_type)
+        # print(consum_days_by_type)
+        # print(consum_rating_by_type)
+        # print(count_rated_consumable_by_type)
+        # print(consumable_count_by_type)
+
+
+        # -------- Calculating the values for across all types        
+        sum_all_type_consum_time_hrs = sum([consumable.consum_time_hrs for consumable in consumables])            
+        
+        sum_all_type_consum_days = sum([consumable.consum_days for consumable in consumables])
+        
+        all_valid_consum_rating_list = []
+        for consumable in consumables:
+            if consumable.rating:
+                all_valid_consum_rating_list.append(consumable.rating)
+        avg_all_type_consum_rating = round(float(sum(all_valid_consum_rating_list)) 
+                                        / max(len(all_valid_consum_rating_list), 1), 2)
+        
+        count_all_type_consumable = len(consumables)
+
+
+        # -- Printing overall info in table
+        table = []
+        for art_type in art_types:
+            if art_type not in consum_time_hrs_by_type:
+                consum_time_hrs_by_type[art_type] = '-'
+            if art_type not in consum_days_by_type:
+                consum_days_by_type[art_type] = '-'
+            if art_type not in consum_rating_by_type:
+                consum_rating_by_type[art_type] = '-'
+            if art_type not in consumable_count_by_type:
+                consumable_count_by_type[art_type] = 0
+
+            avg_current_type_consum_rating = '-'  
+            if consum_rating_by_type[art_type] != '-':
+                avg_current_type_consum_rating = \
+                    float(consum_rating_by_type[art_type]) / count_rated_consumable_by_type[art_type]
+            table.append([art_type, 
+                        consum_time_hrs_by_type[art_type],
+                        consum_days_by_type[art_type],
+                        avg_current_type_consum_rating,
+                        consumable_count_by_type[art_type]])    
+        
+        table.append(['Total',
+                    sum_all_type_consum_time_hrs,
+                    sum_all_type_consum_days,
+                    avg_all_type_consum_rating,
+                    count_all_type_consumable])
+
+        print(tabulate(table, \
+                        headers=['Art Type', 'Total Consumption Hours', 'Total Consumption Days',
+                            'Rating', 'Count'], 
+                        tablefmt='grid'), )
+        
 
     @staticmethod
     ### Below method (when invoked) takes from User, the valid 'update'.. 
@@ -320,4 +430,21 @@ class Controller:
         # return '* * * * * * * * * * * * * * * * * *'
 
 
+    # @staticmethod
+    ### --- Get a specific Consumable and show its details in a table
+    # def readDetailsByObj(consumable):
+    #     table = []
+    #     if consumable:
+    #         table.append([consumable.name, consumable.consum_days, consumable.consum_time_hrs,
+    #              consumable.rating, consumable.start_date, consumable.end_date ])
+    #     else:
+    #         print('Record not valid')
+        
+    #     ## Showing a specific BOOK / SERIES / MOVIE's details
+    #     print(Controller.getStarPadding() +' '+ art_types[consumable.art_type] +' Details ' \
+    #             + Controller.getStarPadding())
+    #     print(tabulate(table, \
+    #                 headers=['Name', 'Total Consumption Days', 'Total Consumption Hours',
+    #                     'Rating', 'Starting Date', 'Ending Date'], 
+    #                 tablefmt='pretty') )
     

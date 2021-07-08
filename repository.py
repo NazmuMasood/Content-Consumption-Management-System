@@ -58,8 +58,7 @@ class Repository:
         Db.closeSession(session)
 
     @staticmethod
-    def readOverall():
-        print('Fetching all consumable(s)...')
+    def readAll():
         session = Db.startSession()
         results = session.query(Consumable.id, Consumable.art_type, Consumable.name, \
                         Consumable.start_date, Consumable.end_date, Consumable.consum_time_hrs, \

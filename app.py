@@ -14,7 +14,8 @@ base_option = Controller.selectFromDict(base_options, 'option')
 
 ### -- Prompting art types to user to choose
 art_types = {'book':'Book', 'series':'Series', 'movie':'Movie'}
-art_type = Controller.selectFromDict(art_types, 'art type')
+if base_option != 'read_overall':
+    art_type = Controller.selectFromDict(art_types, 'art type')
 
 ### --------------- 'Add a consumable' -------------------
 if base_option == 'create':
@@ -32,7 +33,7 @@ if base_option == 'read_all':
         print('Select a '+art_type+' to see more details')
         consumable_id = Controller.selectFromDict(consum_coll, art_type, printOptions=False)
         print(art_type+' id: '+str(consumable_id))
-        Controller.readDetails(art_type, consumable_id)
+        Controller.readDetailsById(art_type, consumable_id)
 
 
 ### --------------- 'Delete a consumable' -------------------
@@ -61,7 +62,7 @@ if base_option == 'edit':
             consumable_id = Controller.selectFromDict(consum_coll, art_type, printOptions=False)
             print(art_type+' id: '+str(consumable_id))
 
-            consumable = Controller.readDetails(art_type, consumable_id, printDetails=False)
+            consumable = Controller.readDetailsById(art_type, consumable_id, printDetails=False)
             if consumable.end_date:
                 print('Cannot edit selected '+art_type+' since its consumption already ended')
                 continue
@@ -73,4 +74,8 @@ if base_option == 'edit':
         print('There is no '+art_type+' available to edit')
 
 
+### --------------- 'See the list of consumables' -------------------
+if base_option == 'read_overall':
+    consumables = Controller.readOverall()
+    Controller.generateReport(consumables)
 
