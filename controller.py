@@ -286,6 +286,7 @@ class Controller:
     def selectFromDict(options, option_type, printOptions=True):
         if printOptions:
             print('Select a/an ' + option_type + ':')
+        
         index = 1
         indexValidList = []
         for optionName in options:
@@ -293,6 +294,7 @@ class Controller:
                 print(str(index) + ') ' + options[optionName])
             indexValidList.extend([optionName])
             index+=1
+
         inputValid = False
         while not inputValid:
             inputRaw = input(option_type + ' no. : ')
@@ -308,6 +310,7 @@ class Controller:
                 break
             else:
                 print('Please select a valid ' + option_type + ' number')
+        
         return selected
 
 
