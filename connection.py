@@ -4,13 +4,15 @@ from sqlalchemy.orm import sessionmaker
 ### --- Db connection
 
 ## --- PostgreSql
-## 'db_connection_string' = 'postgresql+psycopg2://user:password@host:port/dbname'
-# <<<<<<< To use PostgreSQL, uncomment below line >>>>>>>>
+## [GUIDE] 'db_connection_string' = 'postgresql+psycopg2://user:password@host:port/dbname'
+# <<<<<<< To use PostgreSQL, uncomment below line and.. 
+# ..comment out MySQL engine declaration >>>>>>>>
 # engine = create_engine('postgresql+psycopg2://postgres:@127.0.0.1:5432/dsi_task_1', connect_args={"options": "-c timezone=utc"}, echo=False)
  
 ## --- MySql
-## 'db_connection_string' = 'mysql+mysqldb://user:password@host:port/dbname'
-# <<<<<<< To use MySQL, uncomment below line >>>>>>>>
+## [GUIDE] 'db_connection_string' = 'mysql+mysqldb://user:password@host:port/dbname'
+# <<<<<<< To use MySQL, uncomment below line and..
+# ..comment out PostgreSQL engine declaration >>>>>>>>
 engine = create_engine('mysql+mysqldb://root:@127.0.0.1:3306/dsi_task_1', connect_args={"init_command": "SET SESSION time_zone='+00:00'"}, echo=False)
 
 class Db:
